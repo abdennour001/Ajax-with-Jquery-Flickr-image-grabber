@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Flickr Search</title>
+
+		<link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+		
+		<!-- Define the Utf-8 default encoding -->
+		<meta charset="UTF-8">
+		<!-- Define Responsive Meta Tag : This means that the browser will (probably) render the width of the page at the width of its own screen -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- CSS stylesheet of this document -->
+	    <link rel="stylesheet" href="Flickr Search.css"/>
+		<!-- Add the jQuery Library to our project  -->
+		<script type="text/javascript" src="jquery-3.3.1.js"></script>
+		<!-- The javascript script to control the web page -->
+		<script type="text/javascript">
+
+			// the array that will contain our photos
+			var photos = [];
+
+			// the current photo (default : we are in the photo number 1)
+			var num_of_current_photo=0;
+
+			// the photo container "img" tag 
+			var photo_container;
+
+			// title tag
+			var title;
+
+			// the search query field "input" tag
+			var search_input;
+
+			// wait till the document is completly loaded the get the text field and the photo container
+			$(document).ready(function () {
+				// the photo container "img" tag 
+				photo_container = document.getElementById("photo-container");
+
+				// the search query field "input" tag
+				search_input = document.getElementById("search-input");
+
+				// title tag
+				title = document.getElementById("title");
+
+				// disable the next and previous buttons
+				document.getElementById("next-button").disabled = true;
+				document.getElementById("previous-button").disabled = true;
+			})
+
+			// the main function of Ajax requests handled by the jQuery library
+			function jquery_ajax() {
+				$(document).ready(function() {
+					var api_key = "d43faf29f1f8b6fe220834f2e114d354";
+					var secret_key = "4e1af543786c89d6";
+					// search keywork entred by the user
+					var search_query = search_input.value;
+					if (search_query == "") return false;
+					search_query.replace("/", "");
+					// the url of the image that we will be building after recieving the informations from the server
+					var img_src="";
+					// the url of the flickr api
+					var flickr_url="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key="+api_key+"&tags="+search_query.replace(" ", "+")+"&per_page=10&format=json&nojsoncallback=1";
+					// The jQuery Ajax Asynchronous request to ask for the images  
+					$.getJSON( flickr_url ).done( function(data) {
+						$.each(data.photos.photo, function(i,item){
+						    img_src = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_z.jpg";
+						    photos.push({src : img_src, title : item.title});
+						    if (i==1) {
+						    	change_img_tag();
+						    	// enable the next and previous buttons again
+								document.getElementById("next-button").disabled = false;
+								document.getElementById("previous-button").disabled = false;
+						    }
+						});
+					});
+				})
+			}
+
+			// search action started with the search button
+			function search() {
+				photo_container.src = "loading4.gif";	
+				photos = [];
+				num_of_current_photo=0;
+				jquery_ajax();
+			}
+
+			// change the photo coantained in the image container
+			function change_img_tag() {
+				photo_container.src = "loading4.gif";
+				photo_container.onload = function() {
+					photo_container.src = photos[num_of_current_photo]['src'];
+					title.innerHTML = photos[num_of_current_photo]['title'];
+				}
+			}
+
+			// go to the next photo in the slide
+			function next() {
+				if (num_of_current_photo++ >= photos.length-1) {
+					// return to the first photo
+					num_of_current_photo = 0;
+				}
+				change_img_tag();
+			}
+
+			// go to the previous photo in the slide
+			function previous() {
+				if (num_of_current_photo-- <= 0) {
+					// go to the last photo
+					num_of_current_photo = photos.length - 1;
+				}
+				change_img_tag();
+			}
+
+		</script>
+
+	</head>
+	<body>
+
+		<div class="grid-container">
+			
+			<div id="header-section" class="grid-container">
+				
+				<div id="header-item" class="grid-item">
+					<h1>FLICKR&nbsp;SEARCH</h1>
+				</div>
+
+			</div>
+
+			<div id="main-body" class="grid-container">
+				
+				<div id="left-section" class="grid-container">
+					
+					<div id="search-input-item" class="grid-item">
+						
+						<input id="search-input" class="input" type="text" name="search query" placeholder="Search keyword">
+
+					</div>
+					<div id="search-button-item" class="grid-item">
+						
+						<button id="search-button" class="button" onclick="search()">Search</button>
+
+					</div>
+		
+				</div>
+				<div id="right-section" class="grid-container">
+
+					<div id="top-right-section" class="grid-container">
+						
+						<div id="previous-button-item" class="grid-item">
+							
+							<button id="previous-button" class="button" onclick="previous()"><</button>
+
+						</div>
+						<div id="photo-item" class="grid-item">
+							
+							<img id="photo-container" class="photo-con" src="loading4.gif"/>
+
+						</div>
+						<div id="next-button-item" class="grid-item">
+							
+							<button id="next-button" class="button" onclick="next()">></button>
+						
+						</div>
+
+					</div>
+
+					<div id="bottom-right-section" class="grid-container">
+						
+						<div id="title-item" class="grid-item">
+							
+							<h3 id="title" class="title">Images will apear here...</h3>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</body>
+</html>

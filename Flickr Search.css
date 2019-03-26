@@ -1,0 +1,216 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+	font-size: 20px;
+    font-family: sans-serif;
+    margin: 0 auto;
+}
+
+.grid-container {
+	display: grid;
+	grid-gap: 0px;
+	align-content: center;
+	margin-bottom: 50px;
+}
+
+#photo-item {
+	height:400px;
+    width:600px;
+    text-align: center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.photo-con {
+    height:400px;
+    width:auto;/*maintain aspect ratio*/
+    max-width:600px;
+    border: 2px solid rgba(222, 46, 46, 1);
+  	border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.5), 0 16px 50px 0 rgba(0, 0, 0, 0.6);
+    background: linear-gradient(rgba(222, 46, 46, 0.3), rgba(222, 46, 46, 0.1));
+
+}
+
+
+#header-section {
+	justify-items: start;
+ 	background-color: #1abc9c;
+	grid-row: 1;
+    z-index: 2;
+    position: sticky;
+    top: 0;
+    margin: 0;
+    padding-left: 30px;
+    box-shadow: 0 6px 8px 0 rgba(0,0,0,0.25), 0 6px 5px 0 rgba(0,0,0,0.19);
+    /*background-image: url('wallpaper.jpeg');*/
+	background-repeat:no-repeat;	
+	background-size: cover;
+
+  	background-image: 
+    /* top, transparent red */
+    linear-gradient(
+    	to bottom,
+      rgba(222, 46, 46, 0.3), 
+      rgba(222, 46, 46, 0)
+    ),
+    /* your image */
+    url('wallpaper.jpeg');
+
+}
+
+#header-section h1 {
+
+  font: 100 40px/0.5 'Cookie', Helvetica, sans-serif;
+  color: #fff;
+  text-shadow: 4px 4px 3px rgba(0,0,0,0.3);
+}
+
+#main-body {
+	grid-template-columns: auto auto;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#left-section {
+	grid-template-rows: auto auto;
+    /*background: linear-gradient(0deg, rgba(222, 46, 46, 1), rgba(222, 46, 46, 0.2));*/
+	background-repeat:no-repeat;	
+	background-size: cover;
+
+  	background-image: 
+    /* top, transparent red */
+    linear-gradient(
+    	0deg,
+      rgba(222, 46, 46, 0.9), 
+      rgba(222, 46, 46, 0.2)
+    ),
+    /* your image */
+    url('wall1.jpg');
+
+	align-content: start;
+	justify-items: center;
+	padding-top: 70px; 
+	grid-gap: 20px;
+}
+
+#left-section:hover {
+	/*margin-top: 20px;
+	transform: scale(1.04);
+  	transform-origin: bottom;*/
+  	box-shadow: 0 0px 18px 0 rgba(0,0,0,0.5), 0 0px 15px 0 rgba(0,0,0,0.3);
+}
+
+#right-section {
+	grid-template-rows: auto auto;
+	padding: 16px;
+
+		background-repeat:no-repeat;	
+	background-size: cover;
+
+  	background-image: 
+    /* top, transparent red */
+    linear-gradient(
+    	to bottom,
+      rgba(0, 0, 0, 0.3), 
+      rgba(0, 0, 0, 0)
+    ),
+    /* your image */
+    url('wallpaper.jpeg');
+
+}
+
+#right-section:hover {
+	/*margin-top: 20px;
+	transform: scale(1.04);
+  	transform-origin: bottom;*/
+  	box-shadow: 0 0px 18px 0 rgba(0,0,0,0.5), 0 0px 15px 0 rgba(0,0,0,0.3);
+  	/*background: linear-gradient(
+    	to bottom,
+      rgba(0, 0, 0, 0.3), 
+      rgba(0, 0, 0, 0.2)
+    );*/
+}
+
+#top-right-section {
+	grid-template-columns: auto auto auto;
+	justify-items: center;
+	align-items: center;
+}
+
+#bottom-right-section {
+	justify-items: center;
+}
+
+#footer-section {
+	justify-items: start;
+}
+
+.button {
+	background-color: #de2e2e; /* Green */
+	border: none;
+	color: white;
+	opacity: 0.8;
+	padding: 11px 35px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 25px;
+	outline:none;
+}
+
+.button:hover {
+
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,0.2), 0 3px 2px 0 rgba(0,0,0,0.19);
+}
+
+#search-input {
+	padding-left: 15px;
+	font-size: 16px;
+}
+
+.input {
+	border: 2px solid #de2e2e;
+	color:#de2e2e;
+	opacity: 0.8;
+	text-align: start;
+	display: inline-block;
+	border-radius: 25px;
+	outline:none;
+	width: 250px;
+	height: 40px;
+}
+
+.title {
+  font: 100 30px/0.1 'Cookie', Helvetica, sans-serif;
+  color: #fff;
+  text-shadow: 4px 4px 3px rgba(0,0,0,0.1);
+    word-wrap: break-word;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #de2e2e;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #de2e2e;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #de2e2e;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .grid-container {   
+    flex-direction: column;
+  }
+}
